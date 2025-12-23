@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
 namespace UniLog
 {
@@ -21,22 +17,25 @@ namespace UniLog
 
         private string GetFormattedMessage(string message)
         {
-            return prefix ? $"[{source}] {message}" : message;
+            return $"[{source}] {message}";
         }
 
         public void Info(string message)
         {
-            logger.Info(GetFormattedMessage(message));
+            string formatted = GetFormattedMessage(message);
+            logger.Info(prefix ? $"[INFO] {formatted}" : formatted);
         }
 
         public void Warn(string message)
         {
-            logger.Warn(GetFormattedMessage(message));
+            string formatted = GetFormattedMessage(message);
+            logger.Warn(prefix ? $"[WARNING] {formatted}" : formatted);
         }
 
         public void Error(string message)
         {
-            logger.Error(GetFormattedMessage(message));
+            string formatted = GetFormattedMessage(message);
+            logger.Error(prefix ? $"[ERROR] {formatted}" : formatted);
         }
     }
 }
