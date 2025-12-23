@@ -26,7 +26,7 @@ The main thing that it does is prefix log messages with a source identifier, mak
 Logger logger = new UniLog.Logger(new UniLog.Loggers.UnityDebugLogger(), "MySource");
 ```
 
-Optionally store the logger as a field in your mod's main class for easy access.
+Optionally store the logger as a static internal field in your mod's main class for safe and easy access.
 You can also replace `UnityDebugLogger` with any custom logger that implements `ILogger`.
 
 There is also the `boolean prefix` parameter in the `Logger` constructor that controls whether to prefix log messages with the type of log (e.g. `[LOG]`, `[WARNING]`, `[ERROR]`). By default, this is `false`.
@@ -109,7 +109,7 @@ namespace MyMod
 						logger.Info("My mod has loaded!");
 				}
 
-				internal Logger logger;
+				internal static Logger logger;
 		}
 }
 ```
