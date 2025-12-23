@@ -6,6 +6,8 @@ The main thing that it does is prefix log messages with a source identifier, mak
 
 Note that this is a dependency mod for other mods to use, and provides no new functionality by itself. It is designed to be compatible with the 1.6.00.0 beta update (where game code has been moved to SFS.dll), but you can make it compatible for 1.5.10. by removing the SFS.dll reference and adding the reference to Assembly-CSharp.dll (1.5.10. version).
 
+Forum post: [https://jmnet.one/sfs/forum/index.php?threads/unilog-dependency.16911/](https://jmnet.one/sfs/forum/index.php?threads/unilog-dependency.16911/).
+
 ## Features
 
 - Simple logging interface (`ILogger`)
