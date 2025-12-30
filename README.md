@@ -19,7 +19,7 @@ Forum post: [https://jmnet.one/sfs/forum/index.php?threads/unilog-dependency.169
 1. Either clone the repository and build the `UniLog` project into a DLL, or download a pre-built DLL from the [releases page](https://github.com/kojamori/UniLog/releases/).
 2. Add `unilog` as a dependency in your mod's `Dependencies` property.
 3. Place the `UniLog.dll` file into a folder in Mods (`Mods/UniLog/`).
-4. Add `UniLog.dll` as a reference in your mod project.
+4. Add `UniLog.dll` as a reference in your mod's `csproj`.
 5. Use UniLog in your mod!
 
 ## Usage
@@ -27,7 +27,7 @@ Forum post: [https://jmnet.one/sfs/forum/index.php?threads/unilog-dependency.169
 ### 1. Get a Logger
 
 ```csharp
-Logger logger = new UniLog.Logger(new UniLog.Loggers.UnityDebugLogger(), "MySource");
+ILogger logger = new UniLog.Logger(new UniLog.Loggers.UnityDebugLogger(), "MySource");
 ```
 
 Optionally store the logger as a static internal field in your mod's main class for safe and easy access.
@@ -71,7 +71,7 @@ public class MyCustomLogger : UniLog.ILogger
 ```
 
 ```csharp
-Logger customLogger = new UniLog.Logger(new MyCustomLogger(), "MySource");
+ILogger customLogger = new UniLog.Logger(new MyCustomLogger(), "MySource");
 ```
 
 ## Example Mod
@@ -84,37 +84,37 @@ using System.Collections.Generic;
 
 namespace MyMod
 {
-		public class Main : Mod
+	public class Main : Mod
+	{
+		public static Main Instance { get; private set; }
+		public Main()
 		{
-				public static Main Instance { get; private set; }
-				public Main()
-				{
-						Instance = this;
-				}
-
-				public override string ModNameID => "mymod";
-				public override string DisplayName => "My Mod";
-				public override string Author => "Your Name Here";
-				public override string Description => "Your mod description here.";
-				public override string ModVersion => "1.0.0";
-				public override string MinimumGameVersionNecessary => "1.6.00.0";
-				public override Dictionary<string, string> Dependencies => new Dictionary<string, string>
-				{
-						{ "unilog", "" }
-				};
-
-				public override void Early_Load()
-				{
-						this.logger = new Logger(new UnityDebugLogger(), ModNameID);
-				}
-
-				public override void Load()
-				{
-						logger.Info("My mod has loaded!");
-				}
-
-				internal static Logger logger;
+			Instance = this;
 		}
+
+		public override string ModNameID => "mymod";
+		public override string DisplayName => "My Mod";
+		public override string Author => "Your Name Here";
+		public override string Description => "Your mod description here.";
+		public override string ModVersion => "1.0.0";
+		public override string MinimumGameVersionNecessary => "1.6.00.0";
+		public override Dictionary<string, string> Dependencies => new Dictionary<string, string>
+		{
+			{ "unilog", "" }
+		};
+
+		public override void Early_Load()
+		{
+			this.logger = new Logger(new UnityDebugLogger(), this.ModNameID);
+		}
+
+		public override void Load()
+		{
+			logger.Info("My mod has loaded!");
+		}
+
+		internal ILogger logger;
+	}
 }
 ```
 
